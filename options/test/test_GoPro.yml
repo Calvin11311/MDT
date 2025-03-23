@@ -1,0 +1,63 @@
+# ------------------------------------------------------------------------
+# Copyright (c) 2022 megvii-model. All Rights Reserved.
+# ------------------------------------------------------------------------
+# Modified from BasicSR (https://github.com/xinntao/BasicSR)
+# Copyright 2018-2020 BasicSR Authors
+# ------------------------------------------------------------------------
+# general settings
+name: gopro-test_mdt_s2
+model_type: ImageRestorationModel
+scale: 1
+num_gpu: 1 # set num_gpu: 0 for cpu mode
+manual_seed: 10
+
+# dataset and data loader settings
+datasets:
+
+  test:
+    name: gopro-test
+    type: PairedImageDataset
+
+    dataroot_gt: ./datasets/GoPro_lmdb/test_lmdb_full/sharp_crops.lmdb
+    dataroot_lq: ./datasets/GoPro_lmdb/test_lmdb_full/blur_crops.lmdb
+
+    io_backend:
+      type: lmdb
+
+# network structures
+network_g:
+  type: mdt
+  inp_channels: 3
+  out_channels: 3
+  dim: 48
+  num_blocks: [6,6,12]
+  num_refinement_blocks: 4
+  ffn_expansion_factor: 3
+  bias: False
+
+# path
+path:
+  pretrain_network_g: ./models/net_g_150000.pth
+  strict_load_g: true
+  resume_state: ~
+
+# validation settings
+val:
+  save_img: true
+  grids: false
+
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 0
+      test_y_channel: false
+    ssim:
+      type: calculate_ssim
+      crop_border: 0
+      test_y_channel: false
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500
