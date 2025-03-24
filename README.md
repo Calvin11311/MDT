@@ -69,3 +69,12 @@ bash test.sh
 ## Acknowledgment: 
 This code is based on the [Restormer](https://github.com/swz30/Restormer) and [FFTformer](https://github.com/kkkls/FFTformer)
 
+## BibTeX
+
+```BibTeX
+@inproceedings{chen2025polar,
+  title={A Polarization-aided Transformer for Image Deblurring via  Motion Vector Decomposition}},
+  author={Duosheng, Chen and Shihao, Zhou and Jinshan, Pan and Jinglei, Shi and Lishen, Qu and Jufeng, Yang},
+  booktitle={Proceedings of the IEEE/CVF conference on computer vision and pattern recognition},
+  year={2025}
+}
